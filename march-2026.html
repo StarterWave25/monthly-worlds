@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StarterWave Monthly World</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        /* ============================================================
+       DESIGN SYSTEM – Clean light theme, high contrast
+       ============================================================ */
+        :root {
+            --bg: #f4f1eb;
+            --bg-deep: #ede9e0;
+            --surface: #ffffff;
+            --surface-alt: #f9f7f3;
+            --border: #d4cfc4;
+            --border-hi: #b0a896;
+            --text: #1a1a1a;
+            --text-mid: #3d3d3d;
+            --text-dim: #7a7265;
+            --text-mute: #b0a896;
+            --accent: #7a5c00;
+            --accent-bg: #fff8e6;
+            --accent-border: #e0c060;
+            --hold-bg: #fff0f0;
+            --hold-border: #e08080;
+            --hold-text: #a03030;
+            --lock-bg: #f0f0ff;
+            --lock-border: #8080d0;
+            --lock-text: #3030a0;
+            --confirm-bg: #f0fff4;
+            --confirm-border: #60b880;
+            --confirm-text: #1a6a35;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-sans: 'IBM Plex Sans', sans-serif;
+            --radius: 4px;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.05);
+            --transition: 0.18s ease;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-sans);
+            font-size: 16px;
+            line-height: 1.65;
+            min-height: 100vh;
+        }
+
+        /* ── STICKY HEADER ── */
+        #site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--surface);
+            border-bottom: 2px solid var(--border);
+            padding: 16px 48px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+        }
+
+        #site-header h1 {
+            font-family: var(--font-mono);
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            color: var(--text);
+        }
+
+        #site-header .month-label {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--text-dim);
+            padding: 3px 10px;
+            background: var(--bg-deep);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        #header-integrity {
+            margin-left: auto;
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+        }
+
+        /* ── RULE BANNER ── */
+        #rule-banner {
+            position: sticky;
+            top: 64px;
+            z-index: 99;
+            background: var(--bg-deep);
+            border-bottom: 1px solid var(--border);
+            padding: 24px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 64px;
+        }
+
+        #rule-banner .rule-label {
+            font-family: var(--font-mono);
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            background: var(--border);
+            padding: 2px 8px;
+            border-radius: 2px;
+            white-space: nowrap;
+        }
+
+        #rule-banner .rule-text {
+            font-family: var(--font-sans);
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--text-mid);
+        }
+
+        /* ── MAIN ── */
+        main {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 44px 48px 80px;
+        }
+
+        /* ── INTEGRITY SECTION ── */
+        #integrity-section {
+            margin-bottom: 24px;
+            padding: 32px 36px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .integrity-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .integrity-title {
+            font-family: var(--font-mono);
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+
+        .integrity-value {
+            font-family: var(--font-mono);
+            font-size: 44px;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: -0.02em;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 8px;
+            background: var(--bg-deep);
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            margin-bottom: 14px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .progress-fill.hold {
+            background: var(--hold-text);
+        }
+
+        .progress-markers {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .progress-marker {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--text-mute);
+        }
+
+        .progress-marker.done {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .sweep-line {
+            height: 2px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            border-radius: 1px;
+            margin-bottom: 4px;
+        }
+
+        @keyframes sweep-line {
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+        .sweep-line.animate {
+            animation: sweep-line 0.9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .integrity-meta {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
+        }
+
+        .meta-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .meta-val {
+            font-family: var(--font-mono);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .meta-val.warn {
+            color: var(--hold-text);
+        }
+
+        /* ── SYSTEM BANNERS ── */
+        .system-banner {
+            display: none;
+            padding: 16px 24px;
+            margin-bottom: 20px;
+            border-radius: var(--radius);
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .system-banner.visible {
+            display: block;
+        }
+
+        #promotion-lock {
+            background: var(--lock-bg);
+            border: 2px solid var(--lock-border);
+            color: var(--lock-text);
+        }
+
+        #integrity-hold-banner {
+            background: var(--hold-bg);
+            border: 2px solid var(--hold-border);
+            color: var(--hold-text);
+        }
+
+        /* ── COMMIT FORMAT ── */
+        #commit-section {
+            margin-bottom: 36px;
+            padding: 20px 28px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        .commit-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 10px;
+        }
+
+        .commit-format {
+            font-family: var(--font-mono);
+            font-size: 15px;
+            color: var(--accent);
+            background: var(--accent-bg);
+            border: 1px solid var(--accent-border);
+            padding: 14px 18px;
+            border-radius: var(--radius);
+            word-break: break-all;
+        }
+
+        /* ── SECTION TITLE ── */
+        .section-title {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        /* ── PROJECT CARD ── */
+        .project-card {
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--surface);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .project-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px 28px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            user-select: none;
+            background: var(--surface-alt);
+            transition: background var(--transition);
+        }
+
+        .project-header:hover {
+            background: var(--bg-deep);
+        }
+
+        .project-number {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-dim);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            min-width: 90px;
+        }
+
+        .project-name {
+            font-family: var(--font-sans);
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text);
+            flex: 1;
+        }
+
+        .project-status-badge {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 5px 14px;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            background: var(--bg-deep);
+            white-space: nowrap;
+        }
+
+        .project-status-badge.verified {
+            border-color: var(--confirm-border);
+            color: var(--confirm-text);
+            background: var(--confirm-bg);
+        }
+
+        .project-status-badge.submitted {
+            border-color: var(--accent-border);
+            color: var(--accent);
+            background: var(--accent-bg);
+        }
+
+        .project-status-badge.hold {
+            border-color: var(--hold-border);
+            color: var(--hold-text);
+            background: var(--hold-bg);
+        }
+
+        .project-toggle {
+            font-family: var(--font-mono);
+            font-size: 20px;
+            color: var(--text-dim);
+            width: 28px;
+            text-align: center;
+        }
+
+        .project-body {
+            padding: 28px;
+            display: none;
+        }
+
+        .project-body.open {
+            display: block;
+        }
+
+        /* ── CHECK GROUP ── */
+        .check-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 16px;
+            padding: 18px 20px;
+            background: var(--surface-alt);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: border-color var(--transition), background var(--transition);
+        }
+
+        .check-group:hover {
+            border-color: var(--border-hi);
+        }
+
+        .check-group.checked {
+            background: var(--confirm-bg);
+            border-color: var(--confirm-border);
+        }
+
+        /* Custom checkbox */
+        .check-box {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+            border: 2px solid var(--border-hi);
+            background: var(--surface);
+            cursor: pointer;
+            border-radius: 5px;
+            transition: var(--transition);
+            position: relative;
+            margin-top: 2px;
+        }
+
+        .check-box:hover:not(:disabled) {
+            border-color: var(--accent);
+        }
+
+        .check-box:checked {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .check-box:checked::after {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 2px;
+            width: 7px;
+            height: 12px;
+            border: 2.5px solid #fff;
+            border-top: none;
+            border-left: none;
+            transform: rotate(45deg);
+        }
+
+        .check-box:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .check-content {
+            flex: 1;
+        }
+
+        .check-group-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 5px;
+        }
+
+        .check-question {
+            font-family: var(--font-sans);
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-mid);
+            line-height: 1.5;
+        }
+
+        /* ── VERIFY ROW ── */
+        .verify-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px 0 0;
+            border-top: 1px solid var(--border);
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn-verify {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            background: var(--text);
+            color: var(--surface);
+            border: none;
+            padding: 13px 28px;
+            cursor: pointer;
+            border-radius: var(--radius);
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .btn-verify:hover:not(:disabled) {
+            background: var(--accent);
+        }
+
+        .btn-verify:disabled {
+            background: var(--border);
+            color: var(--text-mute);
+            cursor: not-allowed;
+        }
+
+        .verify-status {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--text-dim);
+        }
+
+        .verify-status.submitted {
+            color: var(--accent);
+        }
+
+        .verify-status.confirmed {
+            color: var(--confirm-text);
+        }
+
+        .verify-status.rejected {
+            color: var(--hold-text);
+        }
+
+        .review-controls {
+            display: flex;
+            gap: 10px;
+            margin-left: auto;
+            align-items: center;
+        }
+
+        .btn-review {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            background: transparent;
+            border: 2px solid;
+            padding: 9px 20px;
+            cursor: pointer;
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        .btn-review.accept {
+            border-color: var(--confirm-border);
+            color: var(--confirm-text);
+        }
+
+        .btn-review.accept:hover {
+            background: var(--confirm-bg);
+        }
+
+        .btn-review.reject {
+            border-color: var(--hold-border);
+            color: var(--hold-text);
+        }
+
+        .btn-review.reject:hover {
+            background: var(--hold-bg);
+        }
+
+        /* ── CONFIRM ANIMATION ── */
+        @keyframes confirm-flash {
+            0% {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            40% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .confirm-anim {
+            animation: confirm-flash 0.5s ease forwards;
+        }
+
+        /* ── RESET BUTTON ── */
+        #reset-btn {
+            display: block;
+            margin: 40px auto 0;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            background: transparent;
+            color: var(--text-dim);
+            border: 1px solid var(--border);
+            padding: 10px 24px;
+            cursor: pointer;
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        #reset-btn:hover {
+            border-color: var(--hold-border);
+            color: var(--hold-text);
+        }
+
+        @media (max-width: 640px) {
+
+            #site-header,
+            #rule-banner,
+            main {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            #site-header {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            #rule-banner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .review-controls {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+    </style>
+    <style>
+        /* ── Scoped to .sw-rules-accordion to avoid collisions ── */
+
+        .sw-rules-accordion {
+            font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            border: 1px solid #d4cfc4;
+            border-radius: 4px;
+            overflow: hidden;
+            background: #ffffff;
+            max-width: 880px;
+            margin-bottom: 24px;
+        }
+
+        /* Trigger button */
+        .sw-rules-trigger {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 28px;
+            background: #f9f7f3;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            gap: 12px;
+            border-bottom: 1px solid transparent;
+            transition: background 0.18s ease, border-color 0.18s ease;
+        }
+
+        .sw-rules-trigger:hover {
+            background: #ede9e0;
+        }
+
+        .sw-rules-trigger[aria-expanded="true"] {
+            background: #f9f7f3;
+            border-bottom-color: #d4cfc4;
+        }
+
+        .sw-rules-trigger-label {
+            font-family: 'IBM Plex Mono', 'Courier New', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #3d3d3d;
+        }
+
+        .sw-rules-trigger-icon {
+            font-family: 'IBM Plex Mono', 'Courier New', monospace;
+            font-size: 22px;
+            font-weight: 400;
+            color: #7a7265;
+            line-height: 1;
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-shrink: 0;
+        }
+
+        .sw-rules-trigger[aria-expanded="true"] .sw-rules-trigger-icon {
+            transform: rotate(45deg);
+        }
+
+        /* Body */
+        .sw-rules-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                padding 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sw-rules-body.sw-open {
+            max-height: 600px;
+        }
+
+        /* Ordered list */
+        .sw-rules-list {
+            list-style: none;
+            counter-reset: sw-rule-counter;
+            padding: 24px 28px 28px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .sw-rules-item {
+            counter-increment: sw-rule-counter;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            padding: 16px 0;
+            border-bottom: 1px solid #ede9e0;
+            font-size: 15px;
+            font-weight: 400;
+            color: #3d3d3d;
+            line-height: 1.65;
+        }
+
+        .sw-rules-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            flex-direction: column;
+        }
+
+        .sw-rules-item::before {
+            content: counter(sw-rule-counter);
+            font-family: 'IBM Plex Mono', 'Courier New', monospace;
+            font-size: 12px;
+            font-weight: 700;
+            color: #ffffff;
+            background: #3d3d3d;
+            border-radius: 50%;
+            min-width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+            letter-spacing: 0;
+        }
+
+        .sw-rules-item strong {
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        /* Sub-list (bullet points under rule 3) */
+        .sw-rules-sub {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .sw-rules-sub li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+            color: #3d3d3d;
+            line-height: 1.6;
+        }
+
+        .sw-rules-sub li::before {
+            content: '▪';
+            color: #7a5c00;
+            font-size: 10px;
+            flex-shrink: 0;
+            margin-top: 5px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .sw-rules-trigger {
+                padding: 16px 20px;
+            }
+
+            .sw-rules-list {
+                padding: 16px 20px 20px;
+            }
+
+            .sw-rules-item {
+                font-size: 14px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header id="site-header">
+        <h1>StarterWave Monthly World</h1>
+        <span class="month-label" id="header-month"></span>
+        <span id="header-integrity">YOUR INTEGRITY: 0%</span>
+    </header>
+
+    <div id="rule-banner">
+        <span class="rule-label">Rule of the Month</span>
+        <span class="rule-text" id="rule-text"></span>
+    </div>
+
+    <main>
+
+        <section id="integrity-section">
+            <div class="integrity-header">
+                <span class="integrity-title">Your Integrity Score</span>
+                <span class="integrity-value" id="integrity-pct">0%</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="progress-markers" id="progress-markers"></div>
+            <div class="sweep-line" id="sweep-line"></div>
+            <div class="integrity-meta">
+                <div class="meta-item">
+                    <span class="meta-label">Projects Verified</span>
+                    <span class="meta-val" id="meta-verified">0 / 4</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Rejections</span>
+                    <span class="meta-val" id="meta-rejections">0</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Status</span>
+                    <span class="meta-val" id="meta-status">Active</span>
+                </div>
+            </div>
+        </section>
+
+        <div id="promotion-lock" class="system-banner">▪ Leader Promotion Locked – Next Month</div>
+        <div id="integrity-hold-banner" class="system-banner">▪ Integrity Hold – Progress frozen due to self-check
+            rejection</div>
+
+        <div class="sw-rules-accordion">
+            <button class="sw-rules-trigger" aria-expanded="false" aria-controls="sw-rules-body"
+                onclick="swToggleRules(this)">
+                <span class="sw-rules-trigger-label">Rules</span>
+                <span class="sw-rules-trigger-icon" aria-hidden="true">+</span>
+            </button>
+
+            <div class="sw-rules-body" id="sw-rules-body" role="region" aria-hidden="true">
+                <ol class="sw-rules-list">
+
+                    <li class="sw-rules-item">
+                        <p>You must self-verify every task in the Monthly System and commit using the required commit
+                        message format.</p>
+                    </li>
+
+                    <li class="sw-rules-item">
+                        <p>If you forget to commit, you must mark the final project self-verification as
+                        <strong>Rejected</strong></p>.
+                    </li>
+
+                    <li class="sw-rules-item">
+                        <p>If you receive <strong>2 Rejected</strong> Self-Verifications in a Month:</p>
+                        <ul class="sw-rules-sub">
+                            <li>Your Integrity Score is not increased for the Rejected Project.</li>
+                            <li>You Lose Eligibility for Leader promotion in the next month.</li>
+                        </ul>
+                    </li>
+
+                </ol>
+            </div>
+        </div>
+
+        <section id="commit-section">
+            <div class="commit-label">Required Commit Format</div>
+            <div class="commit-format" id="commit-format"></div>
+        </section>
+
+        <div class="section-title">Projects – <span id="section-month-label"></span></div>
+        <div id="projects-container"></div>
+
+        <button id="reset-btn" onclick="resetAll()">Reset All Progress</button>
+
+    </main>
+
+    <script>
+        /* ============================================================
+           CENTRAL CONFIG
+           ============================================================ */
+        const CONFIG = {
+            month: "March",
+            year: 2026,
+            rule: "Every Task must have Clear Definition of Done and Output must match it Exactly.",
+            projectCount: 4
+        };
+
+        const STORAGE_KEY = `starterwave_${CONFIG.year}_${CONFIG.month}`;
+
+        /* ============================================================
+           CHECK DEFINITIONS (no text inputs — checkbox only)
+           ============================================================ */
+        const CHECK_DEFS = [
+            {
+                id: "dod", letter: "A", title: "Definition of Done Confirmation",
+                question: "Did you understand your task's Definition of Done clearly?"
+            },
+            {
+                id: "bip", letter: "B", title: "Build-in-Public Validation",
+                question: "Did you post about the project, your task, and instruction doc on LinkedIn?"
+            },
+            {
+                id: "out", letter: "C", title: "Output Verification",
+                question: "Did your output exactly match the Definition of Done?"
+            },
+            {
+                id: "ref", letter: "D", title: "Completion Reflection",
+                question: "Did you post project completion, your contribution, and top learnings on LinkedIn?"
+            },
+        ];
+
+        /* ============================================================
+           STATE — persisted in localStorage
+           ============================================================ */
+        let state = loadState();
+
+        function defaultState() {
+            const projects = Array.from({ length: CONFIG.projectCount }, () => ({
+                checks: { dod: false, bip: false, out: false, ref: false },
+                status: "pending",    // pending | submitted | confirmed | rejected
+                rejections: 0,
+            }));
+            return { projects, totalRejections: 0 };
+        }
+
+        function loadState() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) return JSON.parse(raw);
+            } catch (e) { }
+            return defaultState();
+        }
+
+        function saveState() {
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) { }
+        }
+
+        /* ============================================================
+           INIT
+           ============================================================ */
+        function init() {
+            document.getElementById("header-month").textContent = `${CONFIG.month.toUpperCase()} ${CONFIG.year}`;
+            document.getElementById("section-month-label").textContent = `${CONFIG.month} ${CONFIG.year}`;
+            document.getElementById("rule-text").textContent = CONFIG.rule;
+            buildProgressMarkers();
+            buildProjects();
+            restoreFromState();
+            renderIntegrityScore();
+        }
+
+        /* ============================================================
+           BUILD PROGRESS MARKERS
+           ============================================================ */
+        function buildProgressMarkers() {
+            const c = document.getElementById("progress-markers");
+            c.innerHTML = "";
+            for (let i = 0; i < CONFIG.projectCount; i++) {
+                const s = document.createElement("span");
+                s.className = "progress-marker";
+                s.id = `marker-${i}`;
+                s.textContent = `P${i + 1}`;
+                c.appendChild(s);
+            }
+        }
+
+        /* ============================================================
+           BUILD ALL PROJECTS
+           ============================================================ */
+        function buildProjects() {
+            const c = document.getElementById("projects-container");
+            c.innerHTML = "";
+            for (let i = 0; i < CONFIG.projectCount; i++) c.appendChild(buildProjectCard(i));
+        }
+
+        /* ============================================================
+           BUILD ONE PROJECT CARD
+           ============================================================ */
+        function buildProjectCard(idx) {
+            const n = idx + 1;
+            const card = document.createElement("div");
+            card.className = "project-card";
+            card.id = `project-card-${idx}`;
+
+            /* Header */
+            const header = document.createElement("div");
+            header.className = "project-header";
+            header.addEventListener("click", () => toggleCard(idx));
+
+            header.innerHTML = `
+        <span class="project-number">Project ${n}</span>
+        <span class="project-name">Project ${n}</span>
+        <span class="project-status-badge" id="badge-${idx}">Pending</span>
+        <span class="project-toggle" id="toggle-${idx}">+</span>
+      `;
+
+            /* Body */
+            const body = document.createElement("div");
+            body.className = "project-body";
+            body.id = `project-body-${idx}`;
+
+            /* Check groups */
+            CHECK_DEFS.forEach(def => body.appendChild(buildCheckGroup(idx, def)));
+
+            /* Verify row */
+            const row = document.createElement("div");
+            row.className = "verify-row";
+            row.id = `verify-row-${idx}`;
+
+            const btn = document.createElement("button");
+            btn.className = "btn-verify";
+            btn.id = `btn-verify-${idx}`;
+            btn.textContent = "Self-Verify This Project";
+            btn.disabled = true;
+            btn.addEventListener("click", () => submitSelfVerify(idx));
+
+            const statusSpan = document.createElement("span");
+            statusSpan.className = "verify-status";
+            statusSpan.id = `verify-status-${idx}`;
+            statusSpan.textContent = "All four checks must be confirmed first.";
+
+            row.appendChild(btn);
+            row.appendChild(statusSpan);
+            body.appendChild(row);
+
+            card.appendChild(header);
+            card.appendChild(body);
+            return card;
+        }
+
+        /* ============================================================
+           BUILD CHECK GROUP — checkbox only, no text input
+           ============================================================ */
+        function buildCheckGroup(idx, def) {
+            const cbId = `${def.id}-${idx}`;
+
+            const group = document.createElement("div");
+            group.className = "check-group";
+            group.id = `group-${def.id}-${idx}`;
+
+            const cb = document.createElement("input");
+            cb.type = "checkbox";
+            cb.className = "check-box";
+            cb.id = cbId;
+
+            /* Clicking anywhere in the group toggles the checkbox */
+            group.addEventListener("click", (e) => {
+                if (cb.disabled) return;
+                if (e.target !== cb) cb.checked = !cb.checked;
+                handleCheckChange(idx, def.id, cb.checked);
+            });
+
+            cb.addEventListener("change", () => handleCheckChange(idx, def.id, cb.checked));
+
+            const content = document.createElement("div");
+            content.className = "check-content";
+            content.innerHTML = `
+        <div class="check-group-label">${def.letter}. ${def.title}</div>
+        <div class="check-question">${def.question}</div>
+      `;
+
+            group.appendChild(cb);
+            group.appendChild(content);
+            return group;
+        }
+
+        /* ============================================================
+           HANDLE CHECK CHANGE
+           ============================================================ */
+        function handleCheckChange(idx, defId, checked) {
+            state.projects[idx].checks[defId] = checked;
+            saveState();
+
+            const group = document.getElementById(`group-${defId}-${idx}`);
+            if (group) group.classList.toggle("checked", checked);
+
+            checkVerifyButtonState(idx);
+        }
+
+        /* ============================================================
+           TOGGLE CARD
+           ============================================================ */
+        function toggleCard(idx) {
+            const body = document.getElementById(`project-body-${idx}`);
+            const toggle = document.getElementById(`toggle-${idx}`);
+            const isOpen = body.classList.contains("open");
+            body.classList.toggle("open", !isOpen);
+            toggle.textContent = isOpen ? "+" : "−";
+        }
+
+        /* ============================================================
+           CHECK VERIFY BUTTON STATE
+           ============================================================ */
+        function checkVerifyButtonState(idx) {
+            const proj = state.projects[idx];
+            if (!proj || proj.status !== "pending") return;
+            const allChecked = CHECK_DEFS.every(def => proj.checks[def.id]);
+            const btn = document.getElementById(`btn-verify-${idx}`);
+            btn.disabled = !allChecked;
+            document.getElementById(`verify-status-${idx}`).textContent = allChecked
+                ? "Ready for self-verification."
+                : "All four checks must be confirmed first.";
+        }
+
+        /* ============================================================
+           RESTORE FROM STATE INTO DOM
+           ============================================================ */
+        function restoreFromState() {
+            state.projects.forEach((proj, idx) => {
+                /* Restore checkboxes + tinted groups */
+                CHECK_DEFS.forEach(def => {
+                    const cb = document.getElementById(`${def.id}-${idx}`);
+                    const group = document.getElementById(`group-${def.id}-${idx}`);
+                    if (cb) cb.checked = proj.checks[def.id] || false;
+                    if (group) group.classList.toggle("checked", !!proj.checks[def.id]);
+                });
+
+                const status = proj.status;
+
+                if (status === "confirmed") {
+                    lockProjectInputs(idx);
+                    setBadge(idx, "verified", "Integrity Confirmed");
+                    setStatus(idx, "confirmed", "Integrity Confirmed");
+                    document.getElementById(`btn-verify-${idx}`).disabled = true;
+                    const m = document.getElementById(`marker-${idx}`);
+                    if (m) m.classList.add("done");
+
+                } else if (status === "submitted") {
+                    lockProjectInputs(idx);
+                    setBadge(idx, "submitted", "Awaiting Review");
+                    setStatus(idx, "submitted", "Integrity Submitted – Awaiting Review");
+                    document.getElementById(`btn-verify-${idx}`).disabled = true;
+                    showReviewControls(idx);
+
+                } else if (status === "rejected") {
+                    lockProjectInputs(idx);
+                    setBadge(idx, "hold", "Integrity Hold");
+                    setStatus(idx, "rejected", "Self-check rejected – Definition of Done mismatch");
+                    document.getElementById(`btn-verify-${idx}`).disabled = true;
+
+                } else {
+                    checkVerifyButtonState(idx);
+                }
+            });
+        }
+
+        /* ============================================================
+           SUBMIT SELF VERIFY
+           ============================================================ */
+        function submitSelfVerify(idx) {
+            state.projects[idx].status = "submitted";
+            saveState();
+            lockProjectInputs(idx);
+            setBadge(idx, "submitted", "Awaiting Review");
+            setStatus(idx, "submitted", "Integrity Submitted – Awaiting Review");
+            document.getElementById(`btn-verify-${idx}`).disabled = true;
+            showReviewControls(idx);
+        }
+
+        /* ============================================================
+           LOCK INPUTS
+           ============================================================ */
+        function lockProjectInputs(idx) {
+            document.querySelectorAll(`#project-card-${idx} input`).forEach(el => {
+                el.disabled = true;
+            });
+        }
+
+        /* ============================================================
+           SHOW REVIEW CONTROLS
+           ============================================================ */
+        function showReviewControls(idx) {
+            const row = document.getElementById(`verify-row-${idx}`);
+            if (row.querySelector(".review-controls")) return;
+
+            const ctrl = document.createElement("div");
+            ctrl.className = "review-controls";
+            ctrl.innerHTML = `
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-mute);letter-spacing:0.14em;text-transform:uppercase;">Review:</span>
+        <button class="btn-review accept" onclick="reviewProject(${idx}, true)">Accept</button>
+        <button class="btn-review reject" onclick="reviewProject(${idx}, false)">Reject</button>
+      `;
+            row.appendChild(ctrl);
+        }
+
+        /* ============================================================
+           REVIEW PROJECT
+           ============================================================ */
+        function reviewProject(idx, accepted) {
+            const ctrl = document.querySelector(`#project-card-${idx} .review-controls`);
+            if (ctrl) ctrl.remove();
+
+            if (accepted) {
+                state.projects[idx].status = "confirmed";
+                saveState();
+                setBadge(idx, "verified", "Integrity Confirmed");
+                setStatus(idx, "confirmed", "Integrity Confirmed");
+                const m = document.getElementById(`marker-${idx}`);
+                if (m) m.classList.add("done");
+                triggerSweepLine();
+            } else {
+                state.projects[idx].status = "rejected";
+                state.projects[idx].rejections += 1;
+                state.totalRejections = (state.totalRejections || 0) + 1;
+                saveState();
+                setBadge(idx, "hold", "Integrity Hold");
+                setStatus(idx, "rejected", "Self-check rejected – Definition of Done mismatch");
+            }
+
+            renderIntegrityScore();
+        }
+
+        /* ============================================================
+           HELPERS
+           ============================================================ */
+        function setBadge(idx, cls, text) {
+            const b = document.getElementById(`badge-${idx}`);
+            b.className = `project-status-badge ${cls}`;
+            b.textContent = text;
+        }
+
+        function setStatus(idx, cls, text) {
+            const el = document.getElementById(`verify-status-${idx}`);
+            el.className = `verify-status ${cls}`;
+            el.textContent = text;
+        }
+
+        function triggerSweepLine() {
+            const line = document.getElementById("sweep-line");
+            line.classList.remove("animate");
+            void line.offsetWidth;
+            line.classList.add("animate");
+        }
+
+        /* ============================================================
+           RENDER INTEGRITY SCORE
+           ============================================================ */
+        function renderIntegrityScore() {
+            const total = CONFIG.projectCount;
+            const verified = state.projects.filter(p => p.status === "confirmed").length;
+            const rejected = state.totalRejections || 0;
+            const pct = Math.round((verified / total) * 100);
+            const hasHold = state.projects.some(p => p.status === "rejected");
+
+            document.getElementById("progress-fill").style.width = `${pct}%`;
+            document.getElementById("progress-fill").classList.toggle("hold", hasHold);
+            document.getElementById("integrity-pct").textContent = `${pct}%`;
+            document.getElementById("header-integrity").textContent = `YOUR INTEGRITY: ${pct}%`;
+            document.getElementById("meta-verified").textContent = `${verified} / ${total}`;
+
+            const rejEl = document.getElementById("meta-rejections");
+            rejEl.textContent = rejected;
+            rejEl.className = `meta-val${rejected >= 2 ? " warn" : ""}`;
+
+            document.getElementById("meta-status").textContent =
+                hasHold ? "Integrity Hold" : (verified === total ? "Complete" : "Active");
+
+            document.getElementById("integrity-hold-banner").classList.toggle("visible", hasHold);
+            document.getElementById("promotion-lock").classList.toggle("visible", rejected >= 2);
+
+            const lastVerifiedIdx = [...state.projects].map((p, i) => ({ p, i }))
+                .filter(x => x.p.status === "confirmed").pop();
+            const pNum = lastVerifiedIdx ? lastVerifiedIdx.i + 1 : "<N>";
+            const timeStr = new Date().toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" });
+            document.getElementById("commit-format").textContent =
+                `Your-Name | P<PROJECT-NUMBER> | Task-Name | SELF-VERIFIED | ${timeStr}`;
+        }
+
+        /* ============================================================
+           RESET
+           ============================================================ */
+        function resetAll() {
+            if (!confirm("Reset all progress for this month? This cannot be undone.")) return;
+            localStorage.removeItem(STORAGE_KEY);
+            state = defaultState();
+            buildProjects();
+            buildProgressMarkers();
+            renderIntegrityScore();
+            restoreFromState();
+        }
+
+        document.addEventListener("DOMContentLoaded", init);
+    </script>
+    <script>
+        function swToggleRules(btn) {
+            var expanded = btn.getAttribute('aria-expanded') === 'true';
+            var body = document.getElementById(btn.getAttribute('aria-controls'));
+
+            btn.setAttribute('aria-expanded', String(!expanded));
+            body.setAttribute('aria-hidden', String(expanded));
+            body.classList.toggle('sw-open', !expanded);
+        }
+    </script>
+
+</body>
+
+</html>
